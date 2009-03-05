@@ -307,6 +307,13 @@ class DokuWikiClient(object):
         except xmlrpclib.Fault, fault:
             raise DokuWikiXMLRPCError(fault)
 
+    def recent_media_changes(self, timestamp):
+        """Return the recent media changes since a given timestampe (UTC)."""
+        try:
+            return self._xmlrpc.wiki.getRecentMediaChanges(timestamp)
+        except xmlrpclib.Fault, fault:
+            raise DokuWikiXMLRPCError(fault)
+
 
 class Callback(object):
     """Callback class used by the option parser.
@@ -397,6 +404,13 @@ class Callback(object):
                 timestamp = int(time())
             return (callback(timestamp), 'dict')
 
+        elif option == 'recent_media_changes':
+            from time import time
+            timestamp = self._parser.values.timestamp
+            if not timestamp:
+                timestamp = int(time())
+            return (callback(timestamp), 'dict')
+
 
 def main():
     """Main function. Invoked when called as script.
@@ -447,6 +461,12 @@ def main():
             action = 'callback',
             callback = Callback,
             help = 'List recent changes of the Wiki since timestamp.')
+
+    parser.add_option('--media-changes',
+            dest = 'recent_media_changes',
+            action = 'callback',
+            callback = Callback,
+            help = 'List recent media changes of the Wiki since timestamp.')
 
     parser.add_option('--revisions',
             dest = 'page_versions',
