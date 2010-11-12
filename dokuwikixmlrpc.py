@@ -20,14 +20,17 @@
 # for a copy of the GPLv2 License.
 ###############################################################################
 
+# TODO
+# allow to overwrite useragent?
+
 """DokuWiki XMLRPC module.
 
 This modules allows to interact with the XML-RPC interface of DokuWiki
 instances. It supports all methods of the DokuWiki XML-RPC interface.
 """
 
-__all__ = [ "DokuWikiClient" ]
-__version__ = '0.1'
+__version__ = '2010-07-19'
+__author__  = 'Michael Klier <chi@chimeric.de>'
 
 
 import xmlrpclib
@@ -208,7 +211,7 @@ class DokuWikiClient(object):
             raise DokuWikiXMLRPCError(fault)
 
 
-    def put_page(self, page_id, text, summary='', minor=None):
+    def put_page(self, page_id, text, summary='', minor=False):
         """Send a Wiki page to the remote Wiki.
 
         Keyword arguments:
@@ -226,6 +229,12 @@ class DokuWikiClient(object):
         except xmlrpclib.Fault, fault:
             raise DokuWikiXMLRPCError(fault)
 
+    def pagelist(self, namespace):
+        """Lists all pages within a given namespace."""
+        try:
+            return self._xmlrpc.dokuwiki.getPagelist(namespace, {})
+        except xmlrpclib.Fault, fault:
+            raise DokuWikiXMLRPCError(fault)
 
     def all_pages(self):
         """List all pages of the remote Wiki."""
@@ -311,6 +320,19 @@ class DokuWikiClient(object):
         """Return the recent media changes since a given timestampe (UTC)."""
         try:
             return self._xmlrpc.wiki.getRecentMediaChanges(timestamp)
+        except xmlrpclib.Fault, fault:
+            raise DokuWikiXMLRPCError(fault)
+
+
+    def set_locks(self, locks):
+        """
+        Lock/unlock a set of files. Locks must be a dictionary which contains
+        list of ids to lock/unlock:
+
+            locks =  { 'lock' : [], 'unlock' : [] }
+        """
+        try:
+            return self._xmlrpc.dokuwiki.setLocks(locks)
         except xmlrpclib.Fault, fault:
             raise DokuWikiXMLRPCError(fault)
 

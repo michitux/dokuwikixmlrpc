@@ -1,19 +1,22 @@
-# -*- coding: UTF-8 -*-
-from setuptools import setup
-
+# dokuwikixmlrpc's setup.py
+from distutils.core import setup
 setup(
-    # metadata for upload to PyPI
+    name = "dokuwikixmlrpc",
+    version = "2010-07-19",
+    description = "DokuWiki XML-RPC module.",
+    py_modules = ["dokuwikixmlrpc"],
     author = "Michael Klier",
     author_email = "chi@chimeric.de",
-    description = "DokuWikiXMLRPC provides methods to access DokuWiki instances via the XML-RPC protocol.",
-    license = "GNU GPL-2",
-    keywords = "dokuwiki xmlrpc",
-    url = "http://chimeric.de/projects/dokuwikixmlrpc",
-
-    # project data
-    name = "dokuwikixmlrpc",
-    version = "0.1",
-    py_modules = ['dokuwikixmlrpc']
+    url = "http://github.com/chimeric/dokuwikixmlrpc",
+    download_url = "http://github.com/downloads/chimeric/dokuwikixmlrpc/dokuwikixmlrpc.tgz",
+    keyword = ["xmlrpc", "dokuwiki"],
+    classfiers = [
+        "Programming Language :: Python",
+        "Environment :: Other Environment",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: GNU General Public License (GPL)",
+        "Operating System :: OS Independent",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        ]
 )
-
 # vim:ts=4:sw=4:et:enc=utf-8:
