@@ -131,7 +131,7 @@ class DokuWikiClient(object):
                          urlencode({'u': self._user, 'p':self._passwd}) ])
         else:
             proto, url = self._url.split('://')
-            url = proto + '://' + self._user + ':' + self._passwd + '@' + url
+            url = proto + '://' + self._user + ':' + self._passwd + '@' + url + script
 
         xmlrpclib.Transport.user_agent = self._user_agent
         xmlrpclib.SafeTransport.user_agent = self._user_agent
